@@ -1,6 +1,6 @@
 {
-  "name": "promise-events",
-  "version": "0.1.0",
+  "name": "onpromise",
+  "version": "0.1.5",
   "description": "Solve promises using events",
   "main": "index.js",
   "scripts": {

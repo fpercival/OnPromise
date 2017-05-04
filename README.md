@@ -5,13 +5,13 @@ Solve promises using events
 
 ### Install
 
-	npm install --save promise-events
+	npm install --save onpromise
 	
 ### Usage
 
 Create a new emiiter.
 
-	const PromiseEmitter = require("promise-events");
+	const PromiseEmitter = require("onpromise");
 
 	var pe = new PromiseEmitter();
 
