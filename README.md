@@ -1,4 +1,4 @@
-# Promise Events
+# OnPromise
 
 
 Solve promises using events
