@@ -40,5 +40,5 @@ Promises can also be created before a resolver exists.
 	);
 
 	pe.resolve('multiply', (promise, a, b)=>{
-		promise.resolve( axb );
+		promise.resolve( a*b );
 	});
