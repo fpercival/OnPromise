@@ -20,7 +20,7 @@ function PromiseEvent(EventName){
             let eventObj = {};
             let i=0;
             let done=false;
-            let toout;
+            let tout;
             let rejectAfter = timeout||1000;
 
             function _clearTimeout(){
@@ -56,7 +56,7 @@ function PromiseEvent(EventName){
             tout = setTimeout(
                 ()=>{
                     tout = undefined;
-                    eventObj.reject( new Error('PromiseEmitter timed out waiting for ' + EventName ) );
+                    eventObj.reject( new Error('PromiseEmitter timed out waiting for "' + self.name + '" after ' + rejectAfter+'ms.' ) );
                 },
                 rejectAfter
             );
