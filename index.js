@@ -5,7 +5,6 @@ function PromiseEvent(EventName){
     let self = this;
     let handlers = [];
     this.name=EventName;
-    let timeout=1000;
 
     this.handle = function(handler){
         handlers.push(handler);
@@ -15,13 +14,14 @@ function PromiseEvent(EventName){
         }
     };
 
-    this.emit = function(){
-        let args = [].slice.apply(arguments);
+    this.emit = function(timeout, args){
+//        let args = [].slice.apply(arguments);
         var prm = new Promise(function(pResolve, pReject){
             let eventObj = {};
             let i=0;
             let done=false;
             let toout;
+            let rejectAfter = timeout||1000;
 
             function _clearTimeout(){
                 if(tout){
@@ -36,7 +36,7 @@ function PromiseEvent(EventName){
                     _clearTimeout();
                     pResolve.apply(undefined, arguments);
                 }
-            }
+            };
 
             eventObj.reject = function(){
                 if(!done){
@@ -44,7 +44,7 @@ function PromiseEvent(EventName){
                     _clearTimeout();
                     pReject.apply(undefined, arguments);
                 }
-            }
+            };
             args.unshift(eventObj);
 
             function _callHandlers(){
@@ -58,7 +58,7 @@ function PromiseEvent(EventName){
                     tout = undefined;
                     eventObj.reject( new Error('PromiseEmitter timed out waiting for ' + EventName ) );
                 },
-                timeout
+                rejectAfter
             );
 
             if(handlers.length==0){
@@ -87,9 +87,14 @@ function PromiseEmitter(){
 
     self.promise = function(){
         let args = [].slice.apply(arguments);
+        let timeout=0;
         let pname = args.shift();
+        if(typeof pname == 'number'){
+            timeout = pname;
+            pname = args.shift();
+        }
         let p = getPromise(pname, true);
-        return p.emit.apply(undefined, args);
+        return p.emit(timeout, args);
     };
 
     self.resolve = function( promiseNme, handleFunction ){

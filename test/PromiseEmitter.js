@@ -59,4 +59,22 @@ describe('PromiseEmitter', function() {
             }
         );
     });
+
+    it('should be able to configure timeout', function(done) {
+        var tout = 10;
+        var ms = Date.now();
+        pe.promise(tout, 'nonExistingPromise', arg1, arg2).then(
+            function(res){
+                assert.fail(res, {}, 'Resolve should not be called', '!=');
+                done();
+            },
+            function(err){
+                ms = Date.now()-ms;
+                assert.ok(err);
+                assert.ok(ms>=tout);
+                assert.ok(ms<=tout+20);
+                done();
+            }
+        );
+    });
 });

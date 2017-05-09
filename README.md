@@ -42,3 +42,9 @@ Promises can also be created before a resolver exists.
 	pe.resolve('multiply', (promise, a, b)=>{
 		promise.resolve( a*b );
 	});
+
+
+A timeout can be set. If a promise is not resolved/rejected within the given timeout, it is automatically rejected.
+The default timeout is 1000ms
+
+    pe.promise(20, 'multiply', 5, 4).then(...); // Will timeout after approx 20 milliseconds
